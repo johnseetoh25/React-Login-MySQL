@@ -21,8 +21,8 @@ export default function MainDashboard({ handleLogout }) {
   return (
     <div>
       <h2>Main Dashboard</h2>
-      <Link to="/dashboard">
-        <Button variant="contained">Dashboard 2</Button>
+      <Link to="/second_dashboard">
+        <Button variant="contained">2nd Dashboard</Button>
       </Link>
       
         <Button onClick={handleLogout}>Sign Out</Button>

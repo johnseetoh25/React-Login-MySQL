@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
@@ -10,14 +10,19 @@ const LoginPage = ({ setIsAuthenticated, handleStillLogin }) => {
     password: '',
   });
   const [redirectToDashboard, setRedirectToDashboard] = useState(false);
+  const navigate = useNavigate();
 
+  // catch the user's insert their username and password
   const handleLoginInputChange = (e) => {
     setUserLogin((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
+  // console log output
+  console.log(userLogin);
 
+  // user clicked on login
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -30,6 +35,9 @@ const LoginPage = ({ setIsAuthenticated, handleStillLogin }) => {
         setIsAuthenticated(true);
         setRedirectToDashboard(true);
         //navigate('/main_dashboard');
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('id', response.data.id); // Set the ID in local storage
+        navigate(`/main_dashboard/${response.data.id}`); // Pass the ID as a route parameter
       }
       
     } catch (error) {
@@ -37,11 +45,10 @@ const LoginPage = ({ setIsAuthenticated, handleStillLogin }) => {
     }
   };
 
+  // if user insert correct for their username and password, then can directed to 'main dashboard' 
   if (redirectToDashboard) {
     return <Navigate to="/main_dashboard" />;
   }
-
-  console.log(userLogin);
 
   return (
     <div>

@@ -44,15 +44,15 @@ function App() {
           />
           <Route path='register' element={<RegisterPage/>} />
           <Route 
-            path='main_dashboard' 
+            path='main_dashboard/:id' 
             element={<MainDashboard isAuthenticated={isAuthenticated} 
                                     handleLogout={handleLogout}
                     />}
           />
           <Route 
-            path='second_dashboard' 
+            path='second_dashboard/:id' 
             element={<SecondDashboard isAuthenticated={isAuthenticated} 
-                                      handleLogout={handleLogout}
+                                     
                     />}
           />
         </Routes>

@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
+export default function MainDashboard({ handleLogout }) {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-export default function Dashboard({ handleLogout }) {
   // protect authentication
   const isAuthenticated = localStorage.getItem('isAuthenticated');
 
@@ -14,6 +17,30 @@ export default function Dashboard({ handleLogout }) {
     };
   }, []);
 
+  // fetching user's data after user login and authenticated
+  const [userData, setUserData] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8800/users/${id}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (isAuthenticated === 'true') {
+      fetchUserData();
+    }
+  }, [isAuthenticated, id]);
+
+  // navigated to others page
+  const navSecondDashboard = () => {
+    navigate(`/second_dashboard/${id}`);
+  }
+
+  //protect authenticated
   if (isAuthenticated !== 'true') {
     // Redirect the user to the login page
     return <Navigate to="/login" />;
@@ -22,10 +49,9 @@ export default function Dashboard({ handleLogout }) {
   return (
     <div>
       <h2>Main Dashboard</h2>
-      <p>Welcome to our Website</p>
-      <Link to="/second_dashboard">
-        <Button variant="contained">2nd Dashboard</Button>
-      </Link>
+      <p>Hello, {userData.username}</p>
+      <p>{userData.email}</p>
+      <Button variant="contained" onClick={navSecondDashboard}>2nd Dashboard</Button>
       <Button onClick={handleLogout}>Sign Out</Button>
     </div>
   );

@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 export default function SecondDashboard() {
+  const { id } = useParams();
+  const navigate = useNavigate();
 
+  // protect authenticated
   const isAuthenticated = localStorage.getItem('isAuthenticated');
 
   useEffect(() => {
@@ -13,15 +16,21 @@ export default function SecondDashboard() {
     };
   }, []);
 
+  
   if (isAuthenticated !== 'true') {
     // Redirect the user to the login page
     return <Navigate to="/login" />;
   }
 
+  // navigated to others page
+  const navMainDashboard = () => {
+    navigate(`/main_dashboard/${id}`);
+  }
+
   return (
     <div>
       <h2>Second Dashboard</h2>
-      <Link to={'/main_dashboard'}><Button>Main Dashboard</Button></Link>
+      <Button onClick={navMainDashboard}>Main Dashboard</Button>
     </div>
   )
 }

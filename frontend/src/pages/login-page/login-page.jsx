@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import axios from 'axios';
+import { Button, IconButton, TextField } from '@mui/material';
+import { Home } from '@mui/icons-material';
 
 const LoginPage = ({ setIsAuthenticated, handleStillLogin }) => {
   const [userLogin, setUserLogin] = useState({
@@ -58,6 +58,7 @@ const LoginPage = ({ setIsAuthenticated, handleStillLogin }) => {
         name="username"
         value={userLogin.username}
         onChange={handleLoginInputChange}
+        sx={{ marginTop: 2,marginBottom: 1 }}
       />
       <br />
       <TextField
@@ -66,10 +67,11 @@ const LoginPage = ({ setIsAuthenticated, handleStillLogin }) => {
         type="password"
         value={userLogin.password}
         onChange={handleLoginInputChange}
+        sx={{ marginTop: 1, marginBottom: 2 }}
       />
      
       <br/>
-      <Link to={'/'}>Back</Link>
+      <Link to={'/'}><IconButton><Home/></IconButton></Link>
       <Button variant="contained" onClick={handleLogin}>Login</Button>
       <Link to={'/register'}><Button>Sign Up</Button></Link>
       

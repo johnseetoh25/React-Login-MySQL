@@ -40,6 +40,7 @@ export default function RegisterPage() {
         name="username"
         value={username}
         onChange={handleRegister}
+        sx={{marginTop: 2, marginBottom: 1}}
       />
       <br />
       <TextField
@@ -48,6 +49,7 @@ export default function RegisterPage() {
         type="email"
         value={email}
         onChange={handleRegister}
+        sx={{marginTop: 1, marginBottom: 1}}
       />
       <br />
       <TextField
@@ -56,13 +58,12 @@ export default function RegisterPage() {
         type="password"
         value={password}
         onChange={handleRegister}
+        sx={{marginTop: 1, marginBottom: 2}}
       />
       <br />
-      <Button variant="contained" color="primary" onClick={handleSubmitRegister}>
-        Register
-      </Button>
+      <Button variant="contained" onClick={handleSubmitRegister}>Register</Button>
       <br />
-      <Link to="/">Already have an account? Login here</Link>
+      <p>Already have an account?</p><Link to="/login"> Login here</Link>
     </div>
   )
 }
